@@ -5,11 +5,13 @@ from django import forms
 # User Sign Up, Sign In function 구현
 from django.contrib.auth.models import User
 
+from .models import StoredFiles
 
-# class FileUpForm(forms.ModelForm):
-#     class Meta:
-#         model = StoredFiles
-#         fields = ('owner', 'content', 'thumnail', 'description', )
+
+class FileUpForm(forms.ModelForm):
+    class Meta:
+        model = StoredFiles
+        fields = ('content', )
 
 # User Sign Up function 구현
 class SignUpForm(forms.ModelForm):

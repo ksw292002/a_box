@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<form
+    method="POST"
+    action=""
+    enctype="multipart/form-data"
+>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+
+    <!--
+        위의 표현은 아래와 같이 쓸 수도 있겠다.
+
+    {% for field in form1 %}
+    <p>
+        {% if field.errors %}
+        {{ field.errors }} //여기서 errors는 한 개 이상일 수도 있으므로 list
+        {% endif %}
+
+        {{ field.name }} {{ field }}
+    </p>
+    {% endfor %}
+
+    -->
+
+
+    <!--
+        {% if form.errors.image %}
+        {{form.errors.image}}
+        {% endif %}
+
+        또는
+
+        {% if form.image.errors %}
+        {{form.image.errors}}
+        {% endif %}
+
+        이렇게 form 자체에서 직접 접극하려 하나씩 html로 가져오는 경우가 흔하다.
+        각기 다른 요소에 다른 설정(CSS 등)을 할 수도 있기 때문에
+    -->
+
+
+    <p>
+        <button type="submit">업로드</button>
+    </p>
+</form>
+
+{% endblock %}
