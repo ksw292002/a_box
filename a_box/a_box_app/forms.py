@@ -18,7 +18,7 @@ class SignUpForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
-        fields = ['username', 'email', 'password']
+        fields = ('username', 'email', 'password', )
 
 # Login function 구현
 class SigninForm(forms.ModelForm) :
