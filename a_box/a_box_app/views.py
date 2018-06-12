@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
 # Sign Up, Upload를 위한 model form
-from .forms import SigninForm
+from .forms import SigninForm, SignUpForm
 
 # access control을 위한 decorator 참조용
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,31 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
+# S3의 연결(Bucket 생성, 파일 업로드)과 관련된 기능
+from .s3_manager import createUserBucket, uploadFile, getFileUrl
+
 # Create your views here.
+
+
+def signUp(request) :
+    if(request.method == "POST") :
+        form = SignUpForm(request.POST)
+        
+        # form 자체에서 유효성 검사
+        if(form.is_valid()) :
+            # **form.cleaned_data : 유효성 및 파이썬 반환을 고려해
+            # request.POST로 접근하는 것 보다 이 방법을 권장한다.
+            new_user = User.objects.create_user(**form.cleaned_data)
+
+            # DynamoDB 안쓰는걸로
+            # 그리고 그 이름으로 s3에 bucket을 생성
+            createUserBucket(request.POST['username'])
+
+            login(request, new_user)
+            return redirect('main')
+    else:
+        form = SignUpForm()
+        return render(request, 'signup.html', context={'form': form})
 
 
 
@@ -57,3 +81,6 @@ def fileList(request) :
 @login_required
 def fileUpload(request) :
     return HttpResponse("Good!")
+
+
+
