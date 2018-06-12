@@ -36,7 +36,7 @@ def signUp(request) :
             return redirect('main')
     else:
         form = SignUpForm()
-        return render(request, 'signup.html', context={'form': form})
+        return render(request, 'a_box_app/signup.html', context={'form': form})
 
 # login을 뷰에 따로 구현하는 것에서 뷰이름을 'login'이면 안된다.
 # 이미 login이 auth에 있고, 이를 우리는 사용해야 한다.
@@ -56,7 +56,7 @@ def signin(request) :
 
     else :
         form = SigninForm()
-        return render(request, 'signin.html', context={'form':form})
+        return render(request, 'a_box_app/signin.html', context={'form':form})
 
 
 @login_required
@@ -76,11 +76,11 @@ def fileList(request) :
         # template로 넘길 context 요소들
         'user': user,
         # 정렬된 데이터를 템플릿에 변수로서 넘김
-        'storedfiles': storedfiles,
+        # 'storedfiles': storedfiles,
         'file_dict': file_dict,
 
     }
-    return render(request, 'filelist.html', ctx)
+    return render(request, 'a_box_app/filelist.html', ctx)
 
 @login_required
 def fileUpload(request) :

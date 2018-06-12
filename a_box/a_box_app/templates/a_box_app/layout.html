@@ -1,0 +1,40 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>{% block page_title %}A-Box{% endblock %}</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    
+    <link rel="stylesheet" href="{% static 'css/a_box_app.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <div class = 'fence'>
+                <img id = 'logo' src="{% static "img/logo.png" %}">
+                <!-- <p class="navbar-text">A-BOX</p> -->
+              </div>
+            </a>
+          </div>
+          <p class="navbar-text navbar-left">로그인 페이지</p>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">로그인</a></li>
+              <li><a href="#">회원가입</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div>
+      </nav>
+      {% block content %}{% endblock %}
+</body>
+
+</html>
