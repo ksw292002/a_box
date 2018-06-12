@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
 # S3의 연결(Bucket 생성, 파일 업로드)과 관련된 기능
-from .s3_manager import createUserBucket, uploadFile, getFileUrl
+from .s3_manager import createUserBucket, uploadFile, getFileUrl, getFileList
 
 # Create your views here.
 
@@ -65,12 +65,19 @@ def fileList(request) :
     user = request.user
 
     storedfiles = user.storedfiles_set.order_by('-created_at', '-pk')
+    file_list = getFileList(user.username)
+
+    # file name, key 리스트 만들기
+    file_dict = {}
+    for key in file_list :
+        file_dict[key] = str(getFileUrl(user.username,key))
 
     ctx = {
         # template로 넘길 context 요소들
         'user': user,
         # 정렬된 데이터를 템플릿에 변수로서 넘김
         'storedfiles': storedfiles,
+        'file_dict': file_dict,
 
     }
     return render(request, 'filelist.html', ctx)

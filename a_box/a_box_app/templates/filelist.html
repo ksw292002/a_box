@@ -28,6 +28,20 @@
     {% empty %}
         <li>photo empty</li>
     {% endfor %}
+
+    {% for file in file_dict %}
+                
+        <li><a href="{{ file.value }}" download>
+            {{ file.key }}"
+        </li></a>
+    
+       
+    {% empty %}
+        <li>photo empty</li>
+    {% endfor %}
+
+
+
 </ul>
 
 
