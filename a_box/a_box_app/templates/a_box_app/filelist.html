@@ -1,10 +1,9 @@
 {% extends 'a_box_app/layout.html' %}
 
 {% block content %}
-<h1>{{ user.username }}님의 프로필페이지</h1>
+<div class="" style = "height:50px;"></div>
 <!-- <h1>님의 프로필페이지</h1> -->
 
-<ul>
     <!--
         밑의 user1.storedfiles_set.all은
         python의 user1.storedfiles_set.all() 메서드에 해당.
@@ -18,21 +17,23 @@
         이 템플릿을 불러오는 views에서 정렬, 필터를 적용하고
         변수를 지정하여 템플릿으로 넘겨야 한다.
      -->
+<div class = 'container'>
+    <table class="table">
+        <tr>
+            <th>파일명</th>
+        </tr>
+        {% for key, value in file_dict.items %}        
+        <tr>
+            <td><a href="{{ value }}" download>{{ key }}"</a></td>            
+        {% empty %}
+            <td>No Files</td>           
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 
-    {% for key, value in file_dict.items %}
-                
-        <li><a href="{{ value }}" download>
-            {{ key }}"
-        </li></a>
-    
-       
-    {% empty %}
-        <li>No Files</li>
-    {% endfor %}
 
 
-
-</ul>
 
 
 {% endblock %}
