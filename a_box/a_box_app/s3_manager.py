@@ -57,6 +57,12 @@ def getFileList(username):
     keys = []
     bname = 's3b'+str(username)
     resp = s3.list_objects_v2(Bucket=bname)
-    for obj in resp['Contents']:
-        keys.append(obj['Key'])
-    return keys
+
+
+    # 0 파일 체크
+    if(resp['KeyCount'] == 0) :
+        return keys
+    else :
+        for obj in resp['Contents']:
+            keys.append(obj['Key'])
+        return keys

@@ -11,6 +11,9 @@ from .models import StoredFiles
 class FileUpForm(forms.ModelForm):
     class Meta:
         model = StoredFiles
+        widgets = {
+            'content': forms.FileInput(attrs={'id': 'exampleInputFile'}),
+        }
         fields = ('content', )
 
 # User Sign Up function 구현

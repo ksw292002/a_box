@@ -1,50 +1,76 @@
-{% extends 'layout.html' %}
-
+{% extends "a_box_app/layout.html" %}
+{% load staticfiles %}
 {% block content %}
-<form
-    method="POST"
-    action=""
-    enctype="multipart/form-data"
->
-    {% csrf_token %}
-    {{ form.as_p }}
 
 
-    <!--
-        위의 표현은 아래와 같이 쓸 수도 있겠다.
 
-    {% for field in form1 %}
-    <p>
-        {% if field.errors %}
-        {{ field.errors }} //여기서 errors는 한 개 이상일 수도 있으므로 list
-        {% endif %}
-
-        {{ field.name }} {{ field }}
-    </p>
-    {% endfor %}
-
-    -->
+    
 
 
-    <!--
-        {% if form.errors.image %}
-        {{form.errors.image}}
-        {% endif %}
+<div class="" style = "height:50px;"></div>
+    <div class="logo_h">
+      <img src="{% static "img/logo.png" %}">
+    </div>
+    <form class="upload" method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputFile">파일 업로드</label>
+            {{ form.content }}
+            
+            <p class="help-block">업로드 할 파일을 선택</p>
+            <button type="submit" class="btn btn-default">업로드</button>
+        </div>
+    </form>
+    <!-- <form
+        method="POST"
+        action=""
+        enctype="multipart/form-data"
+    > -->
+        <!-- {% csrf_token %} -->
 
-        또는
+        <!--
+            form1 : 이 template으로 넘겨주는 view의 context에서 지정한 변수이름. customable
+            as_p : 위의 form에서 각 field를 <p>태그로 감싸서 출력해줌.
+            만약 에러 내용이 있다면 에러를 출력한다.
 
-        {% if form.image.errors %}
-        {{form.image.errors}}
-        {% endif %}
+        -->
 
-        이렇게 form 자체에서 직접 접극하려 하나씩 html로 가져오는 경우가 흔하다.
-        각기 다른 요소에 다른 설정(CSS 등)을 할 수도 있기 때문에
-    -->
+        <!-- {{ form1.as_p }} -->
 
 
-    <p>
-        <button type="submit">업로드</button>
-    </p>
-</form>
+        <!--
+            위의 표현은 아래와 같이 쓸 수도 있겠다.
 
+        {% for field in form1 %}
+        <p>
+            {% if field.errors %}
+            {{ field.errors }} //여기서 errors는 한 개 이상일 수도 있으므로 list
+            {% endif %}
+
+            {{ field.name }} {{ field }}
+        </p>
+        {% endfor %}
+        -->
+
+
+        <!--
+            {% if form.errors.image %}
+            {{form.errors.image}}
+            {% endif %}
+
+            또는
+
+            {% if form.image.errors %}
+            {{form.image.errors}}
+            {% endif %}
+
+            이렇게 form 자체에서 직접 접극하려 하나씩 html로 가져오는 경우가 흔하다.
+            각기 다른 요소에 다른 설정(CSS 등)을 할 수도 있기 때문에
+        -->
+
+
+        <!-- <p>
+            <button type="submit">업로드</button>
+        </p>
+    </form> -->
 {% endblock %}

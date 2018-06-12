@@ -19,6 +19,7 @@ from .s3_manager import createUserBucket, uploadFile, getFileUrl, getFileList
 
 
 def signUp(request) :
+    user = request.user
     if(request.method == "POST") :
         form = SignUpForm(request.POST)
         
@@ -36,7 +37,7 @@ def signUp(request) :
             return redirect('main')
     else:
         form = SignUpForm()
-        return render(request, 'a_box_app/signup.html', context={'form': form})
+        return render(request, 'a_box_app/signup.html', context={'form': form, 'user': user})
 
 # login을 뷰에 따로 구현하는 것에서 뷰이름을 'login'이면 안된다.
 # 이미 login이 auth에 있고, 이를 우리는 사용해야 한다.
@@ -52,19 +53,21 @@ def signin(request) :
             return redirect('/main/')
         else :
             # user를 찾지 못할 경우 or user 로그인에 실패한 경우
-            return HttpResponse("Login Failed")
+            return redirect('/')
 
     else :
+        user = request.user
         form = SigninForm()
-        return render(request, 'a_box_app/signin.html', context={'form':form})
+        return render(request, 'a_box_app/signin.html', context={'form':form, 'user': user})
 
 
 @login_required
 def fileList(request) :
+
     # 현재 로그인중인 유저 객체를 받아옴.
     user = request.user
 
-    storedfiles = user.storedfiles_set.order_by('-created_at', '-pk')
+    # storedfiles = user.storedfiles_set.order_by('-created_at', '-pk')
     file_list = getFileList(user.username)
 
     # file name, key 리스트 만들기
@@ -84,7 +87,7 @@ def fileList(request) :
 
 @login_required
 def fileUpload(request) :
-
+    user = request.user
     # login 한 유저인지에 대한 여부
     # request.user의 is_authenticated() 메서드 사용 => X
     # user.is_authenticated => O
@@ -144,6 +147,9 @@ def fileUpload(request) :
             # 위의 변수들을 토대로 upload
             uploadFile(username, fname, fpath)
 
+            # upload 후 delete
+            obj.delete()
+
             # redirect는 지정한 URL로 이동(?)시킨다.
             # 만약 인자가 model의 인스턴스라면
             # 그 객체의 get_absolute_url() 실행
@@ -152,10 +158,10 @@ def fileUpload(request) :
 
     ctx = {
         # key : tempalte파일 안에서 쓰여지는 변수의 이름
-        'form': form,
+        'form': form, 'user': user,
     }
 
-    return render(request, 'upload.html', ctx)
+    return render(request, 'a_box_app/upload.html', ctx)
 
 
 
