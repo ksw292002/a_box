@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>ID나 비밀번호가 일치하지 않습니다.</p>
+{% endif %}
+
+<h2>로그인</h2>
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input></input>
+    <input></input>
+    <input></input>
+
+    <input type="submit" value="로그인" />
+</form>
+
+
+
+
+<!-- 
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+-->
+
+
+<!--
+    next : login을 한 후 이동할 url
+-->
+<!-- 
+<input type="hidden" name="next" value="{{ next }}" />
+
+{{ form.as_p }}
+
+<button type="submit">로그인</button>
+</form>
+-->
+
+{% endblock %}

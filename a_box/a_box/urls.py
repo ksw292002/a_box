@@ -15,7 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include, url
+from django.contrib.auth import views as auth_views  # 이 줄 추가. auth
+from a_box_app.views import signin, fileList
+
+# 밑에 두개 static 파일 설정
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^main/$', fileList, name = 'main'),
+    url(r'^$', signin, name = 'login'),
 ]

@@ -1,0 +1,16 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>{% block page_title %}A-Box{% endblock %}</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+</head>
+
+<body>
+{% block content %}{% endblock %}
+</body>
+
+</html>
