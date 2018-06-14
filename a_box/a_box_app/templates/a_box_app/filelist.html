@@ -24,7 +24,10 @@
         </tr>
         {% for key, value in file_dict.items %}        
         <tr>
-            <td><a href="{{ value }}" download>{{ key }}"</a></td>            
+            <td>
+                <a href="{{ value }}" download>{{ key }}</a>
+                <a href="delete/{{ key }}"><input type="button" value="Delete" /></a>
+            </td>            
         {% empty %}
             <td>No Files</td>           
         </tr>

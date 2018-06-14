@@ -66,3 +66,10 @@ def getFileList(username):
         for obj in resp['Contents']:
             keys.append(obj['Key'])
         return keys
+
+# file object를 불러와 삭제
+def deleteFile(username, fname) :
+    s3 = boto3.resource('s3')
+
+    bname = 's3b'+str(username)
+    s3.Object(bname, fname).delete()

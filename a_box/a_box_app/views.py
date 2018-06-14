@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
 # S3의 연결(Bucket 생성, 파일 업로드)과 관련된 기능
-from .s3_manager import createUserBucket, uploadFile, getFileUrl, getFileList
+from .s3_manager import createUserBucket, uploadFile, getFileUrl, getFileList, deleteFile
 
 # Create your views here.
 
@@ -165,3 +165,14 @@ def fileUpload(request) :
     }
 
     return render(request, 'a_box_app/upload.html', ctx)
+
+# file deleting
+@login_required
+def fileDelete(request, fname) :
+    # url에서 fname이 넘어오고
+    # 이것을 토대로 s3에서 deleting을 불러온다.
+    # 현재는 한글제외 숫자, 문자, -, . 문자로 이루어진 파일만 대응한다.
+    deleteFile(request.user.username, fname)
+    
+    # 삭제 후 main으로 redirect
+    return redirect('/main/')
