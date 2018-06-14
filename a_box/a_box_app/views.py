@@ -19,10 +19,13 @@ from .s3_manager import createUserBucket, uploadFile, getFileUrl, getFileList
 
 
 def signUp(request) :
+    #서원석
+    #강상위
+    #김재홍
     user = request.user
     if(request.method == "POST") :
         form = SignUpForm(request.POST)
-        
+
         # form 자체에서 유효성 검사
         if(form.is_valid()) :
             # **form.cleaned_data : 유효성 및 파이썬 반환을 고려해
@@ -112,7 +115,7 @@ def fileUpload(request) :
         form = FileUpForm(request.POST, request.FILES)
 
         if(form.is_valid()) : # form 검증
-        
+
             # form = FileUpForm이고
             # FileUpForm은 model과 연결되어 있으므로
             # 데이터를 저장하게 되는 것
@@ -125,13 +128,13 @@ def fileUpload(request) :
             # 즉, obj는 form에 연결되어 있는 model로 생성한 인스턴스이다.
             # commit=False 속성은 DB에 바로는 반영하지 말아달라고 하는 것.
             obj = form.save(commit=False)
-            
+
             # 이유는 user에 대한 정보를 넘기기 위해서
             # 여러가지 보안상의 문제가 있지만, 여기서는 편하게
             # 잠시 commit=False로 하고 아래와 같인 직접 할당.
             obj.user = request.user
-            
-            # 그리고 최종 save()를 통해 유저정보까지 DB에 반영.            
+
+            # 그리고 최종 save()를 통해 유저정보까지 DB에 반영.
             obj.save()
 
             # Dynamo는 안쓰는걸로
@@ -139,7 +142,7 @@ def fileUpload(request) :
             # prefixing으로 파일이름만 추출
             username = request.user.username
             fpath = obj.content.path
-            
+
             # file name 설정
             prefixing = 'content/'
             fname = obj.content.name.replace(prefixing,'')
@@ -162,6 +165,3 @@ def fileUpload(request) :
     }
 
     return render(request, 'a_box_app/upload.html', ctx)
-
-
-
