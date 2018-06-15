@@ -25,22 +25,31 @@ def signUp(request) :
     user = request.user
     if(request.method == "POST") :
         form = SignUpForm(request.POST)
+        username = request.POST['username']
 
-        # form 자체에서 유효성 검사
-        if(form.is_valid()) :
-            # **form.cleaned_data : 유효성 및 파이썬 반환을 고려해
-            # request.POST로 접근하는 것 보다 이 방법을 권장한다.
-            new_user = User.objects.create_user(**form.cleaned_data)
 
-            # DynamoDB 안쓰는걸로
-            # 그리고 그 이름으로 s3에 bucket을 생성
-            createUserBucket(request.POST['username'])
+        # username 중복체크
+        if(not(User.objects.filter(username=username).exists())) :
+            # form 자체에서 유효성 검사
+            if(form.is_valid()) :
+                # **form.cleaned_data : 유효성 및 파이썬 반환을 고려해
+                # request.POST로 접근하는 것 보다 이 방법을 권장한다.
+                new_user = User.objects.create_user(**form.cleaned_data)
 
-            login(request, new_user)
-            return redirect('main')
+                # DynamoDB 안쓰는걸로
+                # 그리고 그 이름으로 s3에 bucket을 생성
+                createUserBucket(username)
+
+                login(request, new_user)
+                return redirect('main')
+        # 중복이면
+        else :
+            form = SignUpForm()
+            return render(request, 'a_box_app/signup.html', context={'form': form, 'user': user, 'chk':1,})
+            
     else:
         form = SignUpForm()
-        return render(request, 'a_box_app/signup.html', context={'form': form, 'user': user})
+        return render(request, 'a_box_app/signup.html', context={'form': form, 'user': user, 'chk':0})
 
 # login을 뷰에 따로 구현하는 것에서 뷰이름을 'login'이면 안된다.
 # 이미 login이 auth에 있고, 이를 우리는 사용해야 한다.

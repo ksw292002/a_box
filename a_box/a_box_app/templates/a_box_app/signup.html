@@ -19,6 +19,10 @@
       <p>ID나 비밀번호가 일치하지 않습니다.</p>
     {% endif %}
 
+    {% if chk is 1 %}
+    <script>alert("Existing Username! Try Again!")</script>
+    {% endif %}
+
 <!-- <h2>로그인</h2>
 <form method="post" action="">
     {% csrf_token %}
