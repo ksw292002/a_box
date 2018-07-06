@@ -17,7 +17,6 @@ from .s3_manager import createUserBucket, uploadFile, getFileUrl, getFileList, d
 
 # Create your views here.
 
-
 def signUp(request) :
     #서원석
     #강상위
@@ -70,7 +69,7 @@ def signin(request) :
     else :
         user = request.user
         form = SigninForm()
-        return render(request, 'a_box_app/signin.html', context={'form':form, 'user': user})
+        return render(request, 'a_box_app/signin.html', context={'form':form, 'user': user, })
 
 
 @login_required

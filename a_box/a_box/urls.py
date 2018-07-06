@@ -47,7 +47,6 @@ urlpatterns = [
         }
     ),
 
-
-
+    # url(r'^(?P<lang>[\w]+)/$', signin, name = 'login'),
     url(r'^$', signin, name = 'login'),
 ]

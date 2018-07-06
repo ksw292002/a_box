@@ -8,7 +8,7 @@ def createUserBucket(username) :
 
     bname = 's3b'+str(username)
     s3.create_bucket(Bucket=bname, CreateBucketConfiguration={
-        'LocationConstraint': 'us-west-2'})
+        'LocationConstraint': 'ap-northeast-2'})
 
 
 # form으로 받아온 file name과 url을 이용하여 S3에 업로드.
