@@ -73,3 +73,10 @@ def deleteFile(username, fname) :
 
     bname = 's3b'+str(username)
     s3.Object(bname, fname).delete()
+
+# 회원탈퇴시 해당 bucket삭제
+def deleteUserBucket(username) :
+    client = boto3.client('s3')
+    bname = 's3b'+str(username)
+
+    client.delete_bucket(Bucket=bname)

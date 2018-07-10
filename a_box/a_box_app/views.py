@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
 # S3의 연결(Bucket 생성, 파일 업로드)과 관련된 기능
-from .s3_manager import createUserBucket, uploadFile, getFileUrl, getFileList, deleteFile
+from .s3_manager import *
 
 # Create your views here.
 
@@ -70,6 +70,15 @@ def signin(request) :
         user = request.user
         form = SigninForm()
         return render(request, 'a_box_app/signin.html', context={'form':form, 'user': user, })
+
+# 회원탈퇴
+@login_required
+def signout(request) :
+    user = request.user
+    
+    deleteUserBucket(user.username)
+    user.delete()
+    return redirect('/')
 
 
 @login_required
@@ -160,7 +169,7 @@ def fileUpload(request) :
 
             # upload 후 delete
             obj.delete()
-
+            
             # redirect는 지정한 URL로 이동(?)시킨다.
             # 만약 인자가 model의 인스턴스라면
             # 그 객체의 get_absolute_url() 실행
