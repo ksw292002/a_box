@@ -12,6 +12,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
+# messages control
+from django.contrib import messages
+
 # S3의 연결(Bucket 생성, 파일 업로드)과 관련된 기능
 from .s3_manager import *
 
@@ -69,7 +72,7 @@ def signin(request) :
     else :
         user = request.user
         form = SigninForm()
-        return render(request, 'a_box_app/signin.html', context={'form':form, 'user': user, })
+        return render(request, 'a_box_app/signin.html', context={'form':form, 'user': user, 'chk':0})
 
 # 회원탈퇴
 @login_required

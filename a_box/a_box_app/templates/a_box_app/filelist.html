@@ -26,7 +26,8 @@
         <tr>
             <td>
                 <a href="{{ value }}" download>{{ key }}</a>
-                <a href="delete/{{ key }}"><input type="button" value="Delete" /></a>
+                <a href="delete/{{ key }}" onclick="return confirm('이 파일을 삭제하시겠습니까?')"><input type="button" value="Delete" /></a>
+                <!-- 왜 inline javascript를 사용하면 안되지? -->
             </td>            
         {% empty %}
             <td>No Files</td>           
