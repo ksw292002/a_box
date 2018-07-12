@@ -66,7 +66,20 @@ def signin(request) :
             login(request, user)
             return redirect('/main/')
         else :
-            # user를 찾지 못할 경우 or user 로그인에 실패한 경우
+            # django.contrib.messages로 해당 페이지에 message 전달가능.
+            # https://simpleisbetterthancomplex.com/tips/2016/09/06/django-tip-14-messages-framework.html
+
+            # User 존재유무
+            # https://github.com/DNX/django-simple-project/wiki/How-check-if-user-exists-in-Django%3F
+            if(User.objects.filter(username=username).exists()) :
+                # password가 틀릴 경우
+                BADPASS = 50
+                messages.add_message(request, BADPASS, '비밀번호를 확인해주세요.')
+            else :
+                # user를 찾지 못할 경우 or user 로그인에 실패한 경우
+                NOUSER = 60
+                messages.add_message(request, NOUSER, '해당 회원을 찾을 수 없습니다.')
+            
             return redirect('/')
 
     else :
