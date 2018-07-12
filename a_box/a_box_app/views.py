@@ -66,6 +66,8 @@ def signin(request) :
             login(request, user)
             return redirect('/main/')
         else :
+            # happy new github account!!
+            
             # django.contrib.messages로 해당 페이지에 message 전달가능.
             # https://simpleisbetterthancomplex.com/tips/2016/09/06/django-tip-14-messages-framework.html
 
