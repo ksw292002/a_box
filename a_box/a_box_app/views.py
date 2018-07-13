@@ -94,9 +94,19 @@ def signin(request) :
 def signout(request) :
     user = request.user
     
-    deleteUserBucket(user.username)
-    user.delete()
+    try :
+        deleteUserBucket(user.username)
+        user.delete()
+    
+    except :
+        # 파일 존재시 모든 파일 삭제를 우선하고 다시 deleteUserBucket
+        deleteAllFiles(user.username)
+        deleteUserBucket(user.username)
+        user.delete()
+
+    messages.info(request, '회원탈퇴되었습니다.')
     return redirect('/')
+
 
 
 @login_required

@@ -1,6 +1,14 @@
 {% extends 'a_box_app/layout.html' %}
 
 {% block content %}
+
+{% if messages %}
+  {% for message in messages %}
+    <script>alert('{{ message }}')</script>
+  {% endfor %}
+{% endif %}
+
+
 <div class="" style = "height:50px;"></div>
 <!-- <h1>님의 프로필페이지</h1> -->
 
